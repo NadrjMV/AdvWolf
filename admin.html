@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Wolf Vilhena</title>
+    <link rel="stylesheet" href="css/style.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            padding-top: 100px; /* Espaço para o header fixo */
+            background-color: var(--bg-alt-light);
+        }
+        .admin-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1400px;
+            margin: 2rem auto;
+            gap: 2rem;
+            padding: 0 1rem;
+        }
+        .form-container {
+            flex: 1;
+            min-width: 350px;
+        }
+        .list-container {
+            flex: 2;
+            min-width: 400px;
+        }
+        .admin-card {
+            padding: 2rem;
+            background-color: var(--card-bg-light);
+            border: 1px solid rgba(0,0,0,0.05);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            color: var(--text-light);
+        }
+        [data-theme="dark"] .admin-card {
+            border-color: #333;
+        }
+        .admin-card h2 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 2rem;
+            color: var(--text-light);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-muted-light);
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            box-sizing: border-box;
+        }
+        .btn-submit {
+            width: 100%;
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        .btn-submit:hover {
+            background-color: var(--primary-color-darker);
+        }
+        #property-list {
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        .property-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        [data-theme="dark"] .property-list-item {
+            border-bottom-color: #333;
+        }
+        .property-list-item h4 {
+            margin: 0;
+            font-weight: 500;
+        }
+        .actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-left: 1rem;
+            transition: transform 0.2s;
+        }
+        .actions button:hover {
+            transform: scale(1.2);
+        }
+        .actions .delete-btn { color: #e74c3c; }
+        .actions .edit-btn { color: #3498db; }
+        .loader { text-align: center; padding: 2rem; color: var(--text-muted-light); }
+    </style>
+</head>
+<body data-theme="light">
+
+    <header class="header scrolled">
+        <div class="container">
+            <a href="index.html" class="logo">Wolf Vilhena</a>
+            <div style="margin-left: auto; display: flex; align-items: center; gap: 1rem;">
+                <button id="logout-btn-header" class="btn-login">Sair</button>
+                <div class="theme-switcher">
+                    <input type="checkbox" class="checkbox" id="checkbox">
+                    <label for="checkbox" class="label"><i class="fas fa-moon"></i><i class="fas fa-sun"></i><div class="ball"></div></label>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="admin-wrapper">
+        <div class="form-container">
+            <div class="admin-card">
+                <h2>Adicionar Novo Imóvel</h2>
+                <form id="add-property-form">
+                    <div class="form-group">
+                        <label for="title">Título do Imóvel</label>
+                        <input type="text" id="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Localização (Ex: Maria da Fé, MG)</label>
+                        <input type="text" id="location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="image-url">URL da Imagem</label>
+                        <input type="url" id="image-url" required placeholder="https://.../imagem.jpg">
+                    </div>
+                    <button type="submit" class="btn-submit">Adicionar Imóvel</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="list-container">
+            <div class="admin-card">
+                <h2>Imóveis Cadastrados</h2>
+                <div id="property-list">
+                    <p class="loader">Carregando imóveis...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/admin.js"></script> 
+</body>
+</html>
